@@ -8,6 +8,7 @@ function Provider({ children }) {
 
   const fetchBooks = async () => {
     const response = await axios.get('http://localhost:3001/books');
+
     setBooks(response.data);
   };
 
@@ -20,8 +21,10 @@ function Provider({ children }) {
       if (book.id === id) {
         return { ...book, ...response.data };
       }
+
       return book;
     });
+
     setBooks(updatedBooks);
   };
 
@@ -31,6 +34,7 @@ function Provider({ children }) {
     const updatedBooks = books.filter((book) => {
       return book.id !== id;
     });
+
     setBooks(updatedBooks);
   };
 
@@ -38,16 +42,17 @@ function Provider({ children }) {
     const response = await axios.post('http://localhost:3001/books', {
       title,
     });
-    const updatedBooks = [[...books, response.data]];
+
+    const updatedBooks = [...books, response.data];
     setBooks(updatedBooks);
   };
 
   const valueToShare = {
     books,
-    fetchBooks,
-    editBookById,
     deleteBookById,
+    editBookById,
     createBook,
+    fetchBooks,
   };
 
   return (
