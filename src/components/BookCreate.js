@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import useBooksContext from '../hooks/use-books-context';
+import { useContext } from 'react';
+import BooksContext from '../context/books';
 
 function BookCreate() {
   const [title, setTitle] = useState('');
-  const { createBook } = useBooksContext();
+  const { createBook } = useContext(BooksContext);
 
   const handleChange = (event) => {
     setTitle(event.target.value);
@@ -18,9 +19,15 @@ function BookCreate() {
   return (
     <div className="book-create">
       <h3>Add a Book</h3>
-      <form onSubmit={handleSubmit}>
-        <label>Title</label>
-        <input className="input" value={title} onChange={handleChange} />
+      <label>Title</label>
+      <form onSubmit={handleSubmit} className="container.is-fluid">
+        <input
+          className="input"
+          placeholder="Title"
+          value={title}
+          onChange={handleChange}
+          required
+        />
         <button className="button">Create!</button>
       </form>
     </div>

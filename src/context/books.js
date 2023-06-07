@@ -7,18 +7,23 @@ function Provider({ children }) {
   const [books, setBooks] = useState([]);
 
   const fetchBooks = async () => {
-    const response = await axios.get('http://localhost:3001/books');
+    const response = await axios.get('http://localhost:8080/api/books');
 
     setBooks(response.data);
   };
 
-  const editBookById = async (id, newTitle) => {
-    const response = await axios.put(`http://localhost:3001/books/${id}`, {
-      title: newTitle,
+  // const editBookById = async (id, newTitle) => {
+
+  //   const response = await axios.put(`http://localhost:8080/api/books/${id}`, {
+  //     title: newTitle,
+  //   });
+  const editBookById = async (theBook) => {
+    const response = await axios.put(`http://localhost:8080/api/books`, {
+      theBook,
     });
 
     const updatedBooks = books.map((book) => {
-      if (book.id === id) {
+      if (book.id === theBook.id) {
         return { ...book, ...response.data };
       }
 
@@ -29,7 +34,7 @@ function Provider({ children }) {
   };
 
   const deleteBookById = async (id) => {
-    await axios.delete(`http://localhost:3001/books/${id}`);
+    await axios.delete(`http://localhost:8080/api/books/${id}`);
 
     const updatedBooks = books.filter((book) => {
       return book.id !== id;
@@ -39,7 +44,8 @@ function Provider({ children }) {
   };
 
   const createBook = async (title) => {
-    const response = await axios.post('http://localhost:3001/books', {
+    console.log(title);
+    const response = await axios.post('http://localhost:8080/api/books', {
       title,
     });
 
